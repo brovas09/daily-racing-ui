@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    button { margin: 5px; padding: 10px; }
+    #output { margin-top: 20px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+
+<h2>Daily Racing Queries</h2>
+
+<button onclick="run('top4_predicted')">Top 4 (Predicted)</button>
+<button onclick="run('four_ys_filter')">4 Ys</button>
+<button onclick="run('top3_sectionals')">Top 3 Sectionals</button>
+
+<div id="output"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwqkU3gw1YMIKzF2WYw3AsQnLIcZV7kOE05p2fGGGhM4QrxMhosuZWy2pOMq_Hhy-u/exec";
+
+
+function run(queryId) {
+  document.getElementById("output").innerText = "Running...";
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ query_id: queryId })
+  })
+  .then(r => r.json())
+  .then(d => document.getElementById("output").innerText = d.answer)
+  .catch(() => document.getElementById("output").innerText = "Error");
+}
+</script>
+
+</body>
+</html>
